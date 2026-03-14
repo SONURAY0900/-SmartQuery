@@ -1,21 +1,18 @@
-import pyodbc
+import pymssql
 import os
 
 def get_connection():
-    return pyodbc.connect(
-        "DRIVER={ODBC Driver 17 for SQL Server};"
-        "SERVER=sql.bsite.net\\MSSQL2016;"
-        "DATABASE=sonuray_sonuray_;"
-        "UID=sonuray_sonuray_;"
-        f"PWD={os.getenv('DB_PASSWORD')};"
-        "TrustServerCertificate=yes;"
+    return pymssql.connect(
+        server="sql.bsite.net\\MSSQL2016",
+        user="sonuray_sonuray_",
+        password=os.getenv("DB_PASSWORD"),
+        database="sonuray_sonuray_"
     )
 
 def execute_sql(sql: str):
     conn = get_connection()
-    cursor = conn.cursor()
+    cursor = conn.cursor(as_dict=True)
     cursor.execute(sql)
-    columns = [col[0] for col in cursor.description]
-    rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
+    rows = cursor.fetchall()
     conn.close()
     return rows

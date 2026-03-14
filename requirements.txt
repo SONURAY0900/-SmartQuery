@@ -1,6 +1,6 @@
 fastapi
 uvicorn
 requests
-pyodbc
+pymssql
 python-dotenv
 jinja2
