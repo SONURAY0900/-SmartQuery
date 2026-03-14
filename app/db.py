@@ -1,4 +1,5 @@
 import pyodbc
+import os
 
 def get_connection():
     return pyodbc.connect(
@@ -6,7 +7,7 @@ def get_connection():
         "SERVER=sql.bsite.net\\MSSQL2016;"
         "DATABASE=sonuray_sonuray_;"
         "UID=sonuray_sonuray_;"
-        "PWD=RRAYsonu@0900@;"
+        f"PWD={os.getenv('DB_PASSWORD')};"
         "TrustServerCertificate=yes;"
     )
 
