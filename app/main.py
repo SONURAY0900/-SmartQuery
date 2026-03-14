@@ -38,9 +38,9 @@ def save_history(query: str, sql: str, row_count: int, status: str, data: list =
         cursor.execute(
             """
             INSERT INTO dbo.QueryHistory (UserQuery, GeneratedSQL, TotalRows, Status, ResultData)
-            VALUES (?, ?, ?, ?, ?)
+            VALUES (%s, %s, %s, %s, %s)
             """,
-            query, sql, row_count, status, result_data
+            (query, sql, row_count, status, result_data)
         )
         conn.commit()
         conn.close()
